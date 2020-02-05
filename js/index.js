@@ -10,9 +10,10 @@ document.addEventListener("DOMContentLoaded", function() {
     let pageNum = 1;
 
     function fetch20MonstersPage() {
-        fetch(urlMonsters + `/?_limit=2&_page=${pageNum}` )
+        fetch(urlMonsters + `/?_limit=20&_page=${pageNum}` )
             .then(resp => resp.json())
             .then(json => allMonsters(json))
+            .then(json => console.log(json))
        
     }
 
@@ -106,16 +107,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function forward() {
         ++pageNum
-
-        
-        // let child = containerMonster.lastElementChild;
-        // while(child) {
-        //     containerMonster.remove(child);
-        //     child = containerMonster.lastElementChild;
-        // }
-
         fetch20MonstersPage()
     }
+
+        ///back Button
+
+        const backButton = document.getElementById('back')
+        backButton.addEventListener('click', () => {
+            containerMonster.innerHTML = ""
+            backPage()
+    
+        })
+    
+        function backPage() {
+            pageNum > 1 ? --pageNum : alert("I wish Medusa would stop objetifying people");
+            
+            fetch20MonstersPage()
+        }
     
 
 
